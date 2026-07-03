@@ -1,0 +1,916 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+body { font-family:'Lora', Georgia, serif; color:#173A30; font-size:10.6pt; line-height:1.5; }
+.page { position:relative; width:210mm; height:297mm; overflow:hidden; background:#FFFFFF; page-break-after:always; }
+.page:last-child { page-break-after:auto; }
+.pad { position:absolute; top:16mm; left:15mm; right:15mm; bottom:16mm; }
+
+/* Typography */
+h1,h2,h3,h4,.font-d { font-family:'Poppins','DejaVu Sans',sans-serif; }
+.eyebrow { font-family:'Poppins',sans-serif; font-weight:600; letter-spacing:2.5px;
+           text-transform:uppercase; font-size:8.2pt; color:#12876B; }
+p { margin:0 0 7pt 0; text-align:justify; }
+.lead { font-size:11.4pt; color:#173A30; }
+b, strong { color:#0E6B54; }
+sup { font-size:6.6pt; color:#12876B; font-family:'Poppins',sans-serif; vertical-align:super; }
+
+/* Chapter header band */
+.chapband { position:relative; height:34mm; border-radius:0 0 14px 14px;
+            background:#0E6B54;
+            background:-webkit-linear-gradient(135deg, #0E6B54 0%, #1FA07E 100%);
+            color:#fff; overflow:hidden; }
+.chapband .cnum { position:absolute; right:8mm; top:-6mm; font-family:'Poppins',sans-serif;
+                  font-weight:700; font-size:78pt; color:rgba(255,255,255,0.16); line-height:1; }
+.chapband .ctag { position:absolute; left:12mm; top:8mm; font-family:'Poppins',sans-serif;
+                  font-weight:600; letter-spacing:2px; font-size:8pt; text-transform:uppercase;
+                  color:rgba(255,255,255,0.85); }
+.chapband .ctitle { position:absolute; left:12mm; top:14mm; right:34mm; font-family:'Poppins',sans-serif;
+                    font-weight:700; font-size:17.5pt; line-height:1.14; }
+
+/* Section subhead */
+.sub { font-family:'Poppins',sans-serif; font-weight:600; font-size:12.5pt; color:#0E6B54;
+       margin:11pt 0 4pt 0; }
+.sub .dot { display:inline-block; width:8px; height:8px; border-radius:2px; background:#1FA07E;
+            margin-right:7px; vertical-align:middle; }
+
+/* Cards / callouts */
+.card { border:1px solid #D7E5DF; border-radius:12px; padding:10pt 12pt; background:#fff; margin:8pt 0; }
+.callout { border-radius:12px; padding:10pt 12pt 10pt 12pt; margin:9pt 0; }
+.callout .ttl { font-family:'Poppins',sans-serif; font-weight:700; font-size:10pt; margin-bottom:3pt;
+                text-transform:uppercase; letter-spacing:1px; }
+.co-green { background:#E7F2EE; border-left:5px solid #1FA07E; }
+.co-green .ttl { color:#0E6B54; }
+.co-blue  { background:#E6F0F5; border-left:5px solid #2C7DA0; }
+.co-blue .ttl { color:#2C7DA0; }
+.co-amber { background:#FBF1DD; border-left:5px solid #D9932B; }
+.co-amber .ttl { color:#9A6410; }
+.co-coral { background:#FBE7E1; border-left:5px solid #CF5B41; }
+.co-coral .ttl { color:#9E3B26; }
+.callout p { margin:0 0 4pt 0; }
+.callout p:last-child { margin-bottom:0; }
+
+/* Tables */
+table.t { width:100%; border-collapse:collapse; margin:8pt 0; font-size:9.6pt; }
+table.t th { background:#0E6B54; color:#fff; font-family:'Poppins',sans-serif; font-weight:600;
+             text-align:left; padding:6pt 8pt; font-size:9pt; }
+table.t td { border-bottom:1px solid #D7E5DF; padding:5.5pt 8pt; vertical-align:top; }
+table.t tr:nth-child(even) td { background:#F5F8F6; }
+table.t .c { text-align:center; }
+table.t tfoot td { background:#E7F2EE; font-family:'Poppins',sans-serif; font-weight:600;
+                   color:#0E6B54; }
+
+/* FSS scale table */
+table.fss { width:100%; border-collapse:collapse; font-size:9.3pt; margin:7pt 0; }
+table.fss th { background:#0E6B54; color:#fff; font-family:'Poppins',sans-serif; font-weight:600;
+               padding:5pt 7pt; font-size:8.6pt; }
+table.fss td { border-bottom:1px solid #D7E5DF; padding:5pt 7pt; vertical-align:top; }
+table.fss td.n { width:8mm; text-align:center; font-family:'Poppins',sans-serif; font-weight:700;
+                 color:#12876B; }
+table.fss td.s { width:26mm; text-align:center; color:#5C7169; font-family:'Poppins',sans-serif;
+                 letter-spacing:2px; }
+
+/* small list */
+ul.clean { margin:4pt 0 6pt 0; padding-left:0; list-style:none; }
+ul.clean li { position:relative; padding-left:16px; margin-bottom:4.5pt; }
+ul.clean li:before { content:""; position:absolute; left:0; top:6px; width:7px; height:7px;
+                     border-radius:50%; background:#1FA07E; }
+ul.num { margin:4pt 0 6pt 0; padding-left:0; list-style:none; counter-reset:it; }
+ul.num li { position:relative; padding-left:24px; margin-bottom:6pt; counter-increment:it; }
+ul.num li:before { content:counter(it); position:absolute; left:0; top:0; width:17px; height:17px;
+                   border-radius:50%; background:#0E6B54; color:#fff;
+                   font-family:'Poppins',sans-serif; font-weight:700; font-size:8.5pt;
+                   text-align:center; line-height:17px; }
+
+/* footer */
+.footer { position:absolute; left:15mm; right:15mm; bottom:9mm; border-top:1px solid #D7E5DF;
+          padding-top:3.5pt; font-family:'Poppins',sans-serif; font-size:7.4pt; color:#5C7169; }
+.footer .r { float:right; font-weight:600; color:#0E6B54; }
+.footer .l { float:left; letter-spacing:0.5px; }
+
+/* pills / stats */
+.pill { display:inline-block; background:#E7F2EE; color:#0E6B54; font-family:'Poppins',sans-serif;
+        font-weight:600; font-size:8pt; padding:3pt 9pt; border-radius:20px; margin:0 4pt 4pt 0; }
+.statbox { display:inline-block; width:31%; margin-right:1.5%; vertical-align:top; text-align:center;
+           border:1px solid #D7E5DF; border-radius:12px; padding:9pt 4pt; }
+.statbox .big { font-family:'Poppins',sans-serif; font-weight:700; font-size:19pt; color:#0E6B54; line-height:1; }
+.statbox .lbl { font-family:'Poppins',sans-serif; font-size:7.6pt; color:#5C7169; margin-top:4pt; }
+
+.imgwrap { text-align:center; margin:6pt 0; }
+.cap { font-family:'Poppins',sans-serif; font-size:8pt; color:#5C7169; text-align:center; margin-top:3pt; }
+.two { width:100%; }
+.two td { vertical-align:top; }
+</style></head><body><div class="page cover">
+<div style="position:absolute;top:0;left:0;right:0;bottom:0;
+     background:#0E6B54;background:-webkit-linear-gradient(160deg,#0E6B54 0%,#12876B 55%,#1FA07E 100%);"></div>
+<!-- decorative motifs -->
+<svg style="position:absolute;top:0;left:0;" width="210mm" height="297mm" viewBox="0 0 210 297">
+  <circle cx="182" cy="40" r="60" fill="rgba(255,255,255,0.05)"/>
+  <circle cx="20" cy="250" r="70" fill="rgba(255,255,255,0.05)"/>
+  <circle cx="180" cy="255" r="7" fill="rgba(255,255,255,0.10)"/>
+  <circle cx="30" cy="60" r="5" fill="rgba(255,255,255,0.10)"/>
+  <rect x="150" y="205" width="9" height="9" rx="2" transform="rotate(20 154 209)" fill="rgba(255,255,255,0.10)"/>
+  <rect x="40" y="120" width="7" height="7" rx="2" transform="rotate(20 43 123)" fill="rgba(255,255,255,0.08)"/>
+</svg>
+
+<div style="position:absolute;top:15mm;left:0;right:0;text-align:center;color:#fff;">
+  <div style="display:inline-block;"><svg width="16mm" height="16mm" viewBox="0 0 100 100"><circle cx="50" cy="50" r="47" fill="none" stroke="#ffffff" stroke-width="2.5"/><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1"/><path d="M50 30 C42 38 42 50 50 58 C58 50 58 38 50 30 Z" fill="#ffffff"/><path d="M50 40 C46 46 46 56 50 68 C54 56 54 46 50 40 Z" fill="#12876B"/><path d="M35 60 Q50 74 65 60" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+  <div style="font-family:Poppins;font-weight:700;letter-spacing:2px;font-size:8.4pt;margin-top:3mm;">
+     FAKULTAS KEDOKTERAN UNIVERSITAS DIPONEGORO</div>
+  <div style="font-family:Poppins;font-weight:600;letter-spacing:3px;font-size:8.4pt;color:#BFE6D8;">
+     DEPARTEMEN ILMU KESEHATAN MASYARAKAT</div>
+</div>
+
+<div style="position:absolute;top:96mm;left:16mm;right:16mm;color:#fff;text-align:center;">
+  <div style="font-family:Poppins;font-weight:600;letter-spacing:3px;font-size:9pt;color:#BFE6D8;
+       text-transform:uppercase;">Panduan Ringkas Berbasis Bukti</div>
+  <div style="font-family:Poppins;font-weight:800;font-size:29pt;line-height:1.08;margin-top:6mm;">
+     GANGGUAN FUNGSI PADA IBU HAMIL AKIBAT GAKI</div>
+  <div style="width:38mm;height:3px;background:#BFE6D8;margin:7mm auto 6mm auto;border-radius:2px;"></div>
+  <div style="font-family:Poppins;font-weight:500;font-size:13pt;color:#EAF7F1;">
+     Kelelahan &amp; Gangguan Kognitif</div>
+  <div style="font-family:Lora;font-style:italic;font-size:16pt;color:#ffffff;margin-top:9mm;">
+     &ldquo;Sehat Ibu, Cerdas Buah Hati&rdquo;</div>
+</div>
+
+<div style="position:absolute;bottom:26mm;left:16mm;right:16mm;text-align:center;color:#EAF7F1;">
+  <div style="font-family:Poppins;font-size:8.6pt;letter-spacing:1px;color:#BFE6D8;margin-bottom:2mm;">
+     DISUSUN OLEH</div>
+  <div style="font-family:Poppins;font-weight:600;font-size:10.5pt;">[ Nama Penyusun / Tim Penulis ]</div>
+  <div style="font-family:Poppins;font-size:8.6pt;color:#BFE6D8;margin-top:1.5mm;">
+     Dosen Pembimbing: [ Nama Dosen ]</div>
+</div>
+<div style="position:absolute;bottom:12mm;left:0;right:0;text-align:center;
+     font-family:Poppins;font-weight:700;letter-spacing:4px;font-size:11pt;color:#fff;">2026</div>
+</div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Pembuka</div>
+  <div style="font-family:Poppins;font-weight:700;font-size:22pt;color:#0E6B54;margin:2mm 0 6mm 0;">
+     Kata Pengantar</div>
+
+  <p class="lead">Puji syukur kami panjatkan ke hadirat Tuhan Yang Maha Esa atas rahmat dan
+  karunia-Nya sehingga booklet <i>&ldquo;Gangguan Fungsi pada Ibu Hamil Akibat GAKI: Kelelahan
+  dan Gangguan Kognitif&rdquo;</i> ini dapat diselesaikan dengan baik.</p>
+
+  <p>Gangguan Akibat Kekurangan Iodium (GAKI) masih menjadi salah satu masalah gizi masyarakat
+  di Indonesia. Selama ini pembahasannya sering terfokus pada dampak terhadap janin, padahal
+  kekurangan iodium juga menimbulkan gangguan fungsi pada ibu itu sendiri &mdash; terutama rasa
+  <b>lelah yang berlebihan</b> dan <b>penurunan daya ingat serta konsentrasi</b>. Dua keluhan ini
+  kerap dianggap wajar selama kehamilan sehingga luput dari perhatian.</p>
+
+  <p>Booklet ini disusun sebagai panduan ringkas berbasis bukti (mengacu pada pedoman WHO,
+  artikel jurnal terindeks, dan publikasi Kementerian Kesehatan RI) yang ditujukan bagi
+  masyarakat umum, kader kesehatan, serta tenaga kesehatan. Bahasa dan penyajiannya dibuat
+  sederhana, dilengkapi tabel dan infografik, agar mudah dipahami dan nyaman dibaca layaknya
+  catatan belajar.</p>
+
+  <p>Melalui panduan ini, kami berharap ibu hamil dan keluarga dapat mengenali, mengukur, dan
+  mencegah gangguan fungsi akibat GAKI sejak dini &mdash; karena sebagian besar keluhan ini
+  bersifat <b>dapat dipulihkan</b> apabila ditangani tepat waktu.</p>
+
+  <p>Kami menyadari booklet ini masih memiliki keterbatasan. Kritik dan saran yang membangun
+  sangat kami harapkan untuk penyempurnaan di masa mendatang. Semoga booklet ini bermanfaat.</p>
+
+  <div style="margin-top:12mm;text-align:right;">
+     <p style="text-align:right;margin:0;">Semarang, Februari 2026</p>
+     <p style="text-align:right;margin:0;font-family:Poppins;font-weight:600;color:#0E6B54;">Penulis</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">2</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Navigasi</div>
+  <div style="font-family:Poppins;font-weight:700;font-size:22pt;color:#0E6B54;margin:2mm 0 5mm 0;">
+     Daftar Isi</div>
+  <table style="width:100%;border-collapse:collapse;">
+<tr><td style="font-family:Poppins;font-weight:500;color:#173A30;padding:5.5pt 0;font-size:10.4pt;">Kata Pengantar</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">2</td></tr><tr><td style="font-family:Poppins;font-weight:500;color:#173A30;padding:5.5pt 0;font-size:10.4pt;">Daftar Isi</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">3</td></tr><tr><td style="font-family:Poppins;font-weight:700;color:#0E6B54;padding:5.5pt 0;font-size:10.4pt;">BAB I &nbsp;&middot;&nbsp; Mengenal GAKI: Saat Tubuh Kekurangan Iodium</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">4</td></tr><tr><td style="font-family:Poppins;font-weight:700;color:#0E6B54;padding:5.5pt 0;font-size:10.4pt;">BAB II &nbsp;&middot;&nbsp; Dua Beban: Kelelahan &amp; Gangguan Kognitif</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">6</td></tr><tr><td style="font-family:Poppins;font-weight:700;color:#0E6B54;padding:5.5pt 0;font-size:10.4pt;">BAB III &nbsp;&middot;&nbsp; Menelusuri Akar Masalah (Patogenesis)</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">8</td></tr><tr><td style="font-family:Poppins;font-weight:700;color:#0E6B54;padding:5.5pt 0;font-size:10.4pt;">BAB IV &nbsp;&middot;&nbsp; Mengukur Rasa Lelah dengan FSS</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">10</td></tr><tr><td style="font-family:Poppins;font-weight:700;color:#0E6B54;padding:5.5pt 0;font-size:10.4pt;">BAB V &nbsp;&middot;&nbsp; Menilai Ketajaman Pikiran dengan MMSE</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">12</td></tr><tr><td style="font-family:Poppins;font-weight:700;color:#0E6B54;padding:5.5pt 0;font-size:10.4pt;">BAB VI &nbsp;&middot;&nbsp; Cegah dari Akar: Mencukupi Iodium</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">14</td></tr><tr><td style="font-family:Poppins;font-weight:700;color:#0E6B54;padding:5.5pt 0;font-size:10.4pt;">BAB VII &nbsp;&middot;&nbsp; Menjaga Energi: Mencegah Kelelahan</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">16</td></tr><tr><td style="font-family:Poppins;font-weight:700;color:#0E6B54;padding:5.5pt 0;font-size:10.4pt;">BAB VIII &nbsp;&middot;&nbsp; Menjaga Pikiran Tajam</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">18</td></tr><tr><td style="font-family:Poppins;font-weight:500;color:#173A30;padding:5.5pt 0;font-size:10.4pt;">Kesimpulan &amp; Pesan Kunci</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">20</td></tr><tr><td style="font-family:Poppins;font-weight:500;color:#173A30;padding:5.5pt 0;font-size:10.4pt;">Daftar Pustaka</td><td style="border-bottom:1.6px dotted #B9CFC7;width:auto;">&nbsp;</td><td style="font-family:Poppins;font-weight:700;color:#0E6B54;text-align:right;padding:5.5pt 0 5.5pt 6pt;font-size:10.4pt;">21</td></tr>
+  </table>
+  <div class="callout co-green" style="margin-top:10mm;">
+     <div class="ttl">Cara membaca booklet ini</div>
+     <p>Setiap bab dibuat ringkas dan berdiri sendiri. Ikon, kotak sorotan, dan tabel membantu Anda
+     menemukan poin penting dengan cepat. Angka kecil <sup>1</sup> di akhir kalimat merujuk pada
+     sumber di Daftar Pustaka.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">3</span></div></div><div class="page "><div class="chapband"><div class="cnum">I</div><div class="ctag">Bab Satu</div><div class="ctitle">Mengenal GAKI:<br>Saat Tubuh Kekurangan Iodium</div></div>
+<div class="pad" style="top:42mm;">
+  <table class="two"><tr>
+    <td style="width:64%;padding-right:6mm;">
+      <p class="lead"><b>Iodium (yodium)</b> adalah zat gizi mikro yang dibutuhkan tubuh dalam
+      jumlah sangat kecil, tetapi perannya besar: iodium adalah bahan baku utama pembuatan
+      <b>hormon tiroid</b>.<sup>1,2</sup></p>
+      <p>Hormon tiroid ibarat &ldquo;pengatur mesin tubuh&rdquo; &mdash; ia mengendalikan
+      kecepatan metabolisme, produksi energi, serta pertumbuhan otak dan saraf. Bila asupan
+      iodium kurang, pembuatan hormon tiroid terganggu dan muncul berbagai masalah yang disebut
+      <b>Gangguan Akibat Kekurangan Iodium (GAKI)</b>.<sup>1</sup></p>
+    </td>
+    <td style="width:36%;text-align:center;vertical-align:top;">
+      <div style="background:#E7F2EE;border-radius:14px;padding:8pt;"><svg width="34mm" height="34mm" viewBox="0 0 120 120"><rect x="52" y="6" width="16" height="34" rx="7" fill="#E7F2EE"/><path d="M60 42 C40 42 30 58 33 78 C35 96 48 104 60 92 C72 104 85 96 87 78 C90 58 80 42 60 42 Z" fill="#12876B"/><path d="M60 52 L60 96" stroke="#0E6B54" stroke-width="4"/><circle cx="45" cy="72" r="5" fill="#E7F2EE"/><circle cx="75" cy="72" r="5" fill="#E7F2EE"/></svg>
+      <div class="cap" style="margin-top:2pt;">Kelenjar tiroid di leher</div></div>
+    </td>
+  </tr></table>
+
+  <div class="sub"><span class="dot"></span>Apa saja bentuk GAKI?</div>
+  <p>GAKI bukan satu penyakit, melainkan <b>spektrum gangguan</b> yang bisa mengenai semua usia,
+  dari janin hingga lansia. Tanda yang paling dikenal adalah <b>gondok</b> (pembesaran kelenjar
+  tiroid) dan <b>hipotiroidisme</b> (hormon tiroid rendah). Dampaknya bisa meluas hingga
+  keguguran, bayi lahir mati, kelainan bawaan, kretinisme, hambatan tumbuh, serta penurunan
+  fungsi mental.<sup>1</sup></p>
+
+  <div class="callout co-blue">
+     <div class="ttl">Mengapa terbentuk gondok?</div>
+     <p>Saat iodium kurang, hormon tiroid turun. Tubuh berusaha mengejar kekurangan dengan
+     mengeluarkan lebih banyak hormon perangsang tiroid (TSH). Rangsangan terus-menerus ini
+     membuat kelenjar tiroid membesar &mdash; itulah gondok.<sup>2,6</sup></p>
+  </div>
+
+  <div class="callout co-amber">
+     <div class="ttl">Tahukah Anda?</div>
+     <p>Pada kehamilan, kebutuhan iodium <b>meningkat sekitar 50%</b>. Penyebabnya: produksi
+     hormon tiroid ibu naik, iodium lebih banyak terbuang lewat ginjal, dan sebagian iodium
+     dialirkan ke janin melalui plasenta.<sup>3</sup></p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">4</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Bab I &middot; Mengenal GAKI</div>
+
+  <div class="sub"><span class="dot"></span>Berapa kebutuhan iodium harian?</div>
+  <p>Untuk menilai kecukupan iodium, petugas kesehatan mengukur kadar iodium dalam urin
+  (<i>Urinary Iodine Concentration</i>/UIC). Karena kebutuhan ibu hamil lebih tinggi, batas
+  cukupnya pun berbeda dari orang dewasa biasa.<sup>2,3</sup></p>
+
+  <table class="t">
+    <thead><tr><th>Kelompok</th><th class="c">Kebutuhan iodium</th><th class="c">Target median UIC</th></tr></thead>
+    <tbody>
+      <tr><td>Dewasa (tidak hamil)</td><td class="c">150 &micro;g/hari</td><td class="c">100&ndash;199 &micro;g/L</td></tr>
+      <tr><td><b>Ibu hamil</b></td><td class="c"><b>250 &micro;g/hari</b></td><td class="c"><b>150&ndash;249 &micro;g/L</b></td></tr>
+      <tr><td>Ibu menyusui</td><td class="c">250 &micro;g/hari</td><td class="c">&ge; 100 &micro;g/L (ASI)</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:9pt;color:#5C7169;">WHO menganjurkan asupan 150 &micro;g/hari untuk dewasa dan
+  <b>250 &micro;g/hari</b> untuk ibu hamil dan menyusui. Median UIC ibu hamil &lt; 150 &micro;g/L
+  menandakan defisiensi iodium.<sup>2,3</sup></p>
+
+  <div class="sub"><span class="dot"></span>Bagaimana situasi di Indonesia?</div>
+  <table class="two"><tr>
+    <td style="width:60%;padding-right:5mm;">
+      <p>Indonesia menanggulangi GAKI terutama lewat program <b>garam beryodium</b>. Prevalensi
+      gondok memang menurun, tetapi target <i>Universal Salt Iodization</i> (USI) &mdash; yaitu
+      &ge; 90% rumah tangga memakai garam beryodium cukup &mdash; belum sepenuhnya tercapai.<sup>18</sup></p>
+      <p>Kelompok paling rentan adalah <b>wanita usia subur, ibu hamil, ibu menyusui, dan anak</b>,
+      terutama di daerah pegunungan yang tanahnya miskin iodium.<sup>1</sup></p>
+    </td>
+    <td style="width:40%;">
+      <div class="statbox" style="width:100%;margin:0 0 6pt 0;">
+        <div class="big">&asymp;77%</div>
+        <div class="lbl">rumah tangga memakai garam<br>beryodium cukup (Riskesdas 2013)<sup>18</sup></div>
+      </div>
+      <div class="statbox" style="width:100%;margin:0;">
+        <div class="big">&asymp;8%</div>
+        <div class="lbl">masih memakai garam<br>tanpa iodium<sup>18</sup></div>
+      </div>
+    </td>
+  </tr></table>
+
+  <div class="callout co-green">
+     <div class="ttl">Poin Kunci Bab I</div>
+     <p>Iodium diperlukan untuk hormon tiroid. Kekurangannya menyebabkan GAKI (gondok,
+     hipotiroid, dan gangguan lain). Ibu hamil butuh <b>250 &micro;g iodium/hari</b> dan termasuk
+     kelompok paling rentan.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">5</span></div></div><div class="page "><div class="chapband"><div class="cnum">II</div><div class="ctag">Bab Dua</div><div class="ctitle">Dua Beban yang Sering Terabaikan:<br>Kelelahan &amp; Gangguan Kognitif</div></div>
+<div class="pad" style="top:42mm;">
+  <p class="lead">Kekurangan iodium yang berujung pada hipotiroidisme tidak hanya membahayakan
+  janin, tetapi juga menimbulkan <b>gangguan fungsi pada ibu</b>. Dua yang paling menonjol
+  &mdash; dan paling sering dianggap &ldquo;wajar&rdquo; &mdash; adalah kelelahan dan gangguan
+  kognitif.<sup>6</sup></p>
+
+  <table class="two"><tr>
+    <td style="width:22%;text-align:center;padding-top:2mm;"><svg width="38mm" height="21mm" viewBox="0 0 140 80"><rect x="8" y="20" width="112" height="44" rx="8" fill="none" stroke="#CF5B41" stroke-width="4"/><rect x="120" y="34" width="10" height="16" rx="3" fill="#CF5B41"/><rect x="16" y="28" width="14" height="28" rx="4" fill="#CF5B41"/></svg></td>
+    <td style="width:78%;padding-left:4mm;">
+      <div class="sub" style="margin-top:0;"><span class="dot"></span>Kelelahan (<i>Fatigue</i>)</div>
+      <p><b>Kelelahan</b> adalah rasa lelah berlebihan yang terus-menerus, tidak sebanding dengan
+      aktivitas, dan <b>tidak hilang meski sudah istirahat</b>. Ini berbeda dari rasa kantuk biasa.
+      Kelelahan menurunkan motivasi, konsentrasi, dan kemampuan menjalani tugas harian.<sup>5,6</sup></p>
+    </td>
+  </tr></table>
+  <p>Pada kehamilan, tubuh memang sudah bekerja lebih keras (volume darah dan metabolisme
+  meningkat). Bila ditambah hipotiroidisme akibat GAKI dan/atau anemia, rasa lelah bisa menjadi
+  <b>sangat mengganggu</b>.<sup>17</sup></p>
+
+  <table class="two"><tr>
+    <td style="width:78%;padding-right:4mm;">
+      <div class="sub"><span class="dot"></span>Gangguan Kognitif</div>
+      <p><b>Gangguan kognitif</b> mencakup penurunan daya ingat, sulit berkonsentrasi, berpikir
+      terasa lebih lambat, dan mudah lupa. Keluhan ini umum pada hipotiroidisme dan sering
+      disertai perasaan murung.<sup>6</sup></p>
+    </td>
+    <td style="width:22%;text-align:center;padding-top:2mm;"><svg width="34mm" height="34mm" viewBox="0 0 120 120"><path d="M60 20 C44 16 30 26 30 42 C20 46 20 62 32 66 C28 80 40 92 54 86 L54 30 C54 24 58 20 60 20 Z" fill="#1FA07E"/><path d="M60 20 C76 16 90 26 90 42 C100 46 100 62 88 66 C92 80 80 92 66 86 L66 30 C66 24 62 20 60 20 Z" fill="#12876B"/><path d="M54 40 Q46 48 52 56 M66 40 Q74 48 68 56 M54 66 Q60 72 66 66" stroke="#E7F2EE" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></td>
+  </tr></table>
+  <p>Keluhan &ldquo;pelupa&rdquo; ini kerap tumpang tindih dengan perubahan yang memang lazim
+  saat hamil (awam menyebutnya <i>&ldquo;pregnancy brain&rdquo;</i>). Pada ibu hamil dengan GAKI,
+  kedua faktor bisa saling memperberat.<sup>10</sup></p>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">6</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Bab II &middot; Dua Beban Ibu Hamil</div>
+  <div class="sub"><span class="dot"></span>Mengenali perbedaannya</div>
+  <p>Agar mudah dikenali, berikut ringkasan kedua gangguan fungsi tersebut beserta ciri dan
+  dampaknya pada kehidupan sehari-hari ibu hamil.</p>
+
+  <table class="t">
+    <thead><tr><th style="width:26%;">Aspek</th><th>Kelelahan (<i>Fatigue</i>)</th><th>Gangguan Kognitif</th></tr></thead>
+    <tbody>
+      <tr><td><b>Keluhan utama</b></td><td>Lelah terus-menerus, lemas, tidak bertenaga</td>
+          <td>Mudah lupa, sulit fokus, berpikir lambat</td></tr>
+      <tr><td><b>Ciri khas</b></td><td>Tidak membaik meski sudah istirahat</td>
+          <td>Sering tumpang tindih dengan &ldquo;pregnancy brain&rdquo;</td></tr>
+      <tr><td><b>Dampak harian</b></td><td>Motivasi &amp; produktivitas menurun</td>
+          <td>Pekerjaan &amp; komunikasi terganggu</td></tr>
+      <tr><td><b>Sifat</b></td><td colspan="2" class="c"><b>Umumnya dapat dipulihkan bila status tiroid dan penyebab lain dikoreksi</b><sup>6</sup></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout co-blue">
+     <div class="ttl">Kabar baiknya</div>
+     <p>Gangguan kognitif akibat hipotiroidisme umumnya <b>bersifat reversibel</b> &mdash; artinya
+     dapat membaik apabila kekurangan iodium dan gangguan tiroid ditangani dengan tepat.<sup>6</sup></p>
+  </div>
+
+  <div class="callout co-amber">
+     <div class="ttl">Jangan langsung menganggap &ldquo;biasa&rdquo;</div>
+     <p>Rasa lelah dan pelupa memang sering dialami ibu hamil. Namun bila keluhannya
+     <b>berat, menetap, dan mengganggu aktivitas</b>, sebaiknya diperiksa &mdash; bisa jadi ada
+     hipotiroid atau anemia yang perlu dikoreksi.</p>
+  </div>
+
+  <div class="callout co-green">
+     <div class="ttl">Poin Kunci Bab II</div>
+     <p>GAKI dapat menimbulkan <b>kelelahan</b> (lelah yang tak hilang dengan istirahat) dan
+     <b>gangguan kognitif</b> (pelupa, sulit fokus). Keduanya sering terabaikan, padahal umumnya
+     bisa dipulihkan.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">7</span></div></div><div class="page "><div class="chapband"><div class="cnum">III</div><div class="ctag">Bab Tiga</div><div class="ctitle">Menelusuri Akar Masalah:<br>Bagaimana GAKI Bekerja (Patogenesis)</div></div>
+<div class="pad" style="top:42mm;">
+  <p class="lead">Baik kelelahan maupun gangguan kognitif berpangkal pada satu hal yang sama:
+  <b>turunnya hormon tiroid</b> akibat kekurangan iodium, lalu diperberat oleh perubahan tubuh
+  selama hamil.<sup>2,3</sup></p>
+
+  <div class="sub"><span class="dot"></span>Rantai dasar masalahnya</div>
+  <table class="two"><tr>
+    <td style="width:52%;padding-right:6mm;">
+      <div style="margin-top:2mm;">
+<div style="border:1.5px solid #12876B;background:#E7F2EE;border-radius:10px;padding:7pt 10pt;text-align:center;font-family:Poppins;font-weight:600;font-size:9.6pt;color:#173A30;">Asupan iodium kurang</div><div style="text-align:center;color:#1FA07E;font-size:15pt;font-family:Poppins;line-height:1;margin:2pt 0;">&#9660;</div><div style="border:1.5px solid #12876B;background:#E7F2EE;border-radius:10px;padding:7pt 10pt;text-align:center;font-family:Poppins;font-weight:600;font-size:9.6pt;color:#173A30;">Produksi hormon tiroid (T3 &amp; T4) menurun</div><div style="text-align:center;color:#1FA07E;font-size:15pt;font-family:Poppins;line-height:1;margin:2pt 0;">&#9660;</div><div style="border:1.5px solid #0E6B54;background:#0E6B54;border-radius:10px;padding:7pt 10pt;text-align:center;font-family:Poppins;font-weight:600;font-size:9.6pt;color:#ffffff;">Hipotiroidisme</div><div style="text-align:center;color:#1FA07E;font-size:15pt;font-family:Poppins;line-height:1;margin:2pt 0;">&#9660;</div><div style="border:1.5px solid #CF5B41;background:#FBE7E1;border-radius:10px;padding:7pt 10pt;text-align:center;font-family:Poppins;font-weight:600;font-size:9.6pt;color:#9E3B26;">Kelelahan &amp; gangguan kognitif</div>
+      </div>
+    </td>
+    <td style="width:48%;">
+      <div class="callout co-blue" style="margin-top:0;">
+        <div class="ttl">Kenapa lebih berat saat hamil?</div>
+        <p>Kebutuhan iodium naik karena tiga hal:</p>
+        <ul class="num" style="margin-top:2pt;">
+          <li>Produksi hormon tiroid ibu meningkat.</li>
+          <li>Iodium lebih banyak dibuang lewat ginjal.</li>
+          <li>Iodium dialirkan ke janin lewat plasenta.</li>
+        </ul>
+        <p style="margin-top:2pt;">Akibatnya cadangan iodium ibu makin terkuras dan risiko
+        hipotiroid meningkat.<sup>2,3</sup></p>
+      </div>
+    </td>
+  </tr></table>
+
+  <div class="callout co-green" style="margin-top:3mm;">
+     <div class="ttl">Inti Patogenesis</div>
+     <p>Iodium adalah bahan hormon tiroid. Kurang iodium &rarr; hormon tiroid turun &rarr;
+     &ldquo;mesin tubuh&rdquo; dan otak melambat &rarr; muncul lelah dan pelupa.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">8</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Bab III &middot; Patogenesis</div>
+
+  <table class="two"><tr>
+    <td style="width:22%;text-align:center;padding-top:3mm;vertical-align:top;"><svg width="34mm" height="19mm" viewBox="0 0 140 80"><rect x="8" y="20" width="112" height="44" rx="8" fill="none" stroke="#CF5B41" stroke-width="4"/><rect x="120" y="34" width="10" height="16" rx="3" fill="#CF5B41"/><rect x="16" y="28" width="14" height="28" rx="4" fill="#CF5B41"/></svg></td>
+    <td style="width:78%;padding-left:4mm;">
+      <div class="sub" style="margin-top:0;"><span class="dot"></span>Mengapa timbul kelelahan?</div>
+      <p>Hormon tiroid mengatur <b>laju metabolisme</b> dan produksi energi. Saat hormon rendah,
+      pembakaran energi di sel melambat &mdash; tubuh terasa <b>lesu, lemah, dan mudah lelah</b>,
+      bahkan tidak tahan dingin.<sup>5,6</sup></p>
+    </td>
+  </tr></table>
+  <p>Pada ibu hamil, hal ini menumpuk dengan meningkatnya kebutuhan energi kehamilan. Ditambah
+  lagi, kekurangan iodium sering berdampingan dengan <b>anemia</b>. Anemia menurunkan pasokan
+  oksigen ke jaringan, sehingga rasa lelah, lemah, dan sesak menjadi makin berat.<sup>17</sup></p>
+
+  <div class="callout co-coral">
+     <div class="ttl">Kombinasi yang memberatkan</div>
+     <p><b>Hipometabolisme</b> (akibat hipotiroid) + <b>kurang oksigen</b> (akibat anemia) =
+     kelelahan yang bisa sangat berat pada ibu hamil dengan GAKI.</p>
+  </div>
+
+  <table class="two"><tr>
+    <td style="width:78%;padding-right:4mm;">
+      <div class="sub"><span class="dot"></span>Mengapa timbul gangguan kognitif?</div>
+      <p>Hormon tiroid penting bagi otak, termasuk otak dewasa. Reseptornya banyak terdapat di
+      <b>hipokampus</b> &mdash; pusat belajar dan memori. Kekurangan hormon tiroid mengganggu
+      &ldquo;penguatan koneksi antar-sel saraf&rdquo; yang menjadi dasar pembentukan ingatan,
+      serta menurunkan faktor penunjang saraf seperti BDNF.<sup>5,6</sup></p>
+    </td>
+    <td style="width:22%;text-align:center;padding-top:3mm;vertical-align:top;"><svg width="32mm" height="32mm" viewBox="0 0 120 120"><path d="M60 20 C44 16 30 26 30 42 C20 46 20 62 32 66 C28 80 40 92 54 86 L54 30 C54 24 58 20 60 20 Z" fill="#1FA07E"/><path d="M60 20 C76 16 90 26 90 42 C100 46 100 62 88 66 C92 80 80 92 66 86 L66 30 C66 24 62 20 60 20 Z" fill="#12876B"/><path d="M54 40 Q46 48 52 56 M66 40 Q74 48 68 56 M54 66 Q60 72 66 66" stroke="#E7F2EE" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></td>
+  </tr></table>
+  <p>Selama hamil, otak juga mengalami penyesuaian alami (sebagian volume materi abu-abu menurun,
+  lalu pulih setelah melahirkan). Penyesuaian ini menambah kesan &ldquo;pelupa&rdquo;, sehingga
+  pada GAKI keluhan kognitif terasa lebih nyata.<sup>10</sup></p>
+
+  <div class="callout co-green">
+     <div class="ttl">Poin Kunci Bab III</div>
+     <p>Kelelahan muncul karena metabolisme energi melambat (diperberat anemia). Gangguan kognitif
+     muncul karena hormon tiroid dibutuhkan otak untuk memori &mdash; keduanya berakar pada
+     kekurangan iodium.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">9</span></div></div><div class="page "><div class="chapband"><div class="cnum">IV</div><div class="ctag">Bab Empat</div><div class="ctitle">Mengukur Rasa Lelah:<br>Fatigue Severity Scale (FSS)</div></div>
+<div class="pad" style="top:42mm;">
+  <p class="lead">Rasa lelah itu subjektif. Agar bisa dinilai secara objektif, digunakan kuesioner
+  singkat bernama <b>Fatigue Severity Scale (FSS)</b>.</p>
+
+  <div class="sub"><span class="dot"></span>Apa itu FSS?</div>
+  <p>FSS dikembangkan oleh Krupp dan kawan-kawan pada 1989. Semula untuk pasien multiple sclerosis
+  dan lupus, kini dipakai luas untuk menilai kelelahan pada berbagai kondisi.<sup>11</sup> FSS
+  terdiri atas <b>9 pernyataan</b> yang menilai keparahan kelelahan serta dampaknya terhadap
+  motivasi, aktivitas fisik, dan fungsi sosial.<sup>11</sup></p>
+
+  <table class="two"><tr>
+    <td style="width:33%;">
+      <div class="statbox" style="width:100%;margin:0;"><div class="big">9</div>
+        <div class="lbl">butir pernyataan</div></div>
+    </td>
+    <td style="width:33%;">
+      <div class="statbox" style="width:100%;margin:0;"><div class="big">1&ndash;7</div>
+        <div class="lbl">skala tiap butir</div></div>
+    </td>
+    <td style="width:33%;">
+      <div class="statbox" style="width:100%;margin:0;"><div class="big">&ge; 4</div>
+        <div class="lbl">ambang kelelahan bermakna</div></div>
+    </td>
+  </tr></table>
+
+  <div class="callout co-blue">
+     <div class="ttl">Cara mengisi</div>
+     <p>Untuk setiap pernyataan, ibu memberi nilai <b>1</b> (sangat tidak setuju) hingga <b>7</b>
+     (sangat setuju), berdasarkan pengalaman <b>satu minggu terakhir</b>.<sup>11</sup></p>
+  </div>
+
+  <div class="callout co-green">
+     <div class="ttl">Mengapa cocok untuk ibu hamil?</div>
+     <p>FSS singkat, mudah diisi sendiri, dan sudah <b>diterjemahkan serta divalidasi dalam bahasa
+     Indonesia</b> dengan keandalan sangat baik &mdash; sehingga praktis dipakai sebagai skrining
+     kelelahan.<sup>13</sup></p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">10</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Bab IV &middot; Fatigue Severity Scale</div>
+  <div class="sub" style="margin-top:1mm;"><span class="dot"></span>Kuesioner FSS versi Bahasa Indonesia</div>
+  <p style="margin-bottom:4pt;">Lingkari satu angka untuk tiap pernyataan (1 = sangat tidak setuju,
+  7 = sangat setuju), sesuai kondisi <b>satu minggu terakhir</b>.</p>
+
+  <table class="fss">
+    <thead><tr><th style="width:8mm;">No</th><th>Pernyataan</th><th style="width:26mm;">Nilai</th></tr></thead>
+    <tbody>
+<tr><td class="n">1</td><td>Motivasi saya menurun ketika saya sedang merasa lelah.</td><td class="s">1 2 3 4 5 6 7</td></tr><tr><td class="n">2</td><td>Berolahraga membuat saya menjadi lelah.</td><td class="s">1 2 3 4 5 6 7</td></tr><tr><td class="n">3</td><td>Saya mudah merasa lelah.</td><td class="s">1 2 3 4 5 6 7</td></tr><tr><td class="n">4</td><td>Kelelahan mengganggu kemampuan fisik saya.</td><td class="s">1 2 3 4 5 6 7</td></tr><tr><td class="n">5</td><td>Kelelahan sering menimbulkan masalah bagi saya.</td><td class="s">1 2 3 4 5 6 7</td></tr><tr><td class="n">6</td><td>Kelelahan membuat saya tidak mampu melakukan aktivitas fisik yang berkelanjutan.</td><td class="s">1 2 3 4 5 6 7</td></tr><tr><td class="n">7</td><td>Kelelahan mengganggu saya dalam menjalankan tugas dan tanggung jawab tertentu.</td><td class="s">1 2 3 4 5 6 7</td></tr><tr><td class="n">8</td><td>Kelelahan termasuk salah satu dari tiga keluhan yang paling mengganggu bagi saya.</td><td class="s">1 2 3 4 5 6 7</td></tr><tr><td class="n">9</td><td>Kelelahan mengganggu pekerjaan, kehidupan keluarga, atau kehidupan sosial saya.</td><td class="s">1 2 3 4 5 6 7</td></tr>
+    </tbody>
+  </table>
+
+  <table class="two" style="margin-top:2mm;"><tr>
+    <td style="width:50%;padding-right:4mm;">
+      <div class="callout co-amber" style="margin-top:0;">
+        <div class="ttl">Cara menghitung skor</div>
+        <p>Jumlahkan nilai ke-9 butir, lalu <b>bagi 9</b> (skor rata-rata, rentang 1,0&ndash;7,0).<sup>12</sup></p>
+      </div>
+    </td>
+    <td style="width:50%;">
+      <div class="callout co-green" style="margin-top:0;">
+        <div class="ttl">Interpretasi</div>
+        <p><b>&lt; 4</b> &rarr; tidak ada kelelahan bermakna.<br>
+        <b>&ge; 4</b> &rarr; kelelahan bermakna klinis &mdash; perlu ditelusuri penyebabnya
+        (hipotiroid, anemia, gangguan tidur).<sup>12</sup></p>
+      </div>
+    </td>
+  </tr></table>
+  <p style="font-size:8.6pt;color:#5C7169;">Butir di atas merupakan adaptasi bahasa dan dapat
+  disesuaikan dengan versi terjemahan resmi yang telah divalidasi.<sup>13</sup></p>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">11</span></div></div><div class="page "><div class="chapband"><div class="cnum">V</div><div class="ctag">Bab Lima</div><div class="ctitle">Menilai Ketajaman Pikiran:<br>Mini-Mental State Examination (MMSE)</div></div>
+<div class="pad" style="top:42mm;">
+  <p class="lead">Untuk menilai apakah keluhan &ldquo;pelupa&rdquo; sudah mencapai tingkat gangguan
+  yang bermakna, digunakan pemeriksaan singkat bernama <b>Mini-Mental State Examination (MMSE)</b>.</p>
+
+  <div class="sub"><span class="dot"></span>Apa itu MMSE?</div>
+  <p>MMSE diperkenalkan oleh Folstein dan kawan-kawan pada 1975 sebagai cara cepat (sekitar
+  <b>5&ndash;10 menit</b>) untuk menilai fungsi kognitif secara terukur.<sup>14</sup> Pemeriksaan
+  dilakukan oleh petugas dengan mengajukan sejumlah pertanyaan dan tugas sederhana.<sup>14,15</sup></p>
+
+  <div class="sub"><span class="dot"></span>Domain yang dinilai</div>
+  <p>MMSE menilai beberapa kemampuan otak: <b>orientasi</b> (waktu &amp; tempat),
+  <b>registrasi</b> (mengingat segera), <b>atensi &amp; kalkulasi</b>, <b>pengingatan kembali</b>
+  (<i>recall</i>), serta <b>bahasa &amp; praksis</b> (menyebut nama benda, mengulang kalimat,
+  memahami perintah, menulis, dan menyalin gambar).<sup>14,15</sup></p>
+
+  <table class="two"><tr>
+    <td style="width:65%;padding-right:5mm;">
+      <div class="callout co-blue" style="margin-top:2mm;">
+        <div class="ttl">Skrining, bukan diagnosis</div>
+        <p>MMSE adalah <b>alat penapis</b>. Hasil yang tidak normal perlu ditindaklanjuti dengan
+        pemeriksaan klinis menyeluruh &mdash; termasuk pemeriksaan fungsi tiroid.<sup>14,15</sup></p>
+      </div>
+    </td>
+    <td style="width:35%;text-align:center;vertical-align:middle;">
+      <div style="background:#E7F2EE;border-radius:14px;padding:8pt;"><svg width="30mm" height="30mm" viewBox="0 0 120 120"><path d="M60 20 C44 16 30 26 30 42 C20 46 20 62 32 66 C28 80 40 92 54 86 L54 30 C54 24 58 20 60 20 Z" fill="#1FA07E"/><path d="M60 20 C76 16 90 26 90 42 C100 46 100 62 88 66 C92 80 80 92 66 86 L66 30 C66 24 62 20 60 20 Z" fill="#12876B"/><path d="M54 40 Q46 48 52 56 M66 40 Q74 48 68 56 M54 66 Q60 72 66 66" stroke="#E7F2EE" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+      <div class="cap" style="margin-top:2pt;">Total skor 0&ndash;30</div></div>
+    </td>
+  </tr></table>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">12</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Bab V &middot; Mini-Mental State Examination</div>
+  <div class="sub" style="margin-top:1mm;"><span class="dot"></span>Komponen &amp; skor MMSE</div>
+
+  <table class="t">
+    <thead><tr><th>Domain yang dinilai</th><th class="c" style="width:22mm;">Skor maks.</th><th>Contoh tugas</th></tr></thead>
+    <tbody>
+      <tr><td>Orientasi</td><td class="c">10</td><td>Menyebut tanggal, hari, bulan, tahun, dan tempat</td></tr>
+      <tr><td>Registrasi</td><td class="c">3</td><td>Mengulang 3 kata yang disebut pemeriksa</td></tr>
+      <tr><td>Atensi &amp; kalkulasi</td><td class="c">5</td><td>Mengurangi 7 dari 100 berturut-turut / mengeja mundur</td></tr>
+      <tr><td>Pengingatan (<i>recall</i>)</td><td class="c">3</td><td>Mengingat kembali 3 kata sebelumnya</td></tr>
+      <tr><td>Bahasa &amp; praksis</td><td class="c">9</td><td>Penamaan, pengulangan, perintah, menulis, menyalin</td></tr>
+    </tbody>
+    <tfoot><tr><td>TOTAL</td><td class="c">30</td><td>Skor &le; 23 menandakan kemungkinan gangguan kognitif</td></tr></tfoot>
+  </table>
+
+  <div class="sub"><span class="dot"></span>Cara membaca hasilnya</div>
+  <table class="two"><tr>
+    <td style="width:33%;padding-right:3mm;">
+      <div style="border:1px solid #D7E5DF;border-top:5px solid #12876B;border-radius:10px;padding:8pt;text-align:center;">
+        <div style="font-family:Poppins;font-weight:700;font-size:15pt;color:#0E6B54;">24&ndash;30</div>
+        <div style="font-family:Poppins;font-size:8.4pt;color:#5C7169;">Normal</div></div>
+    </td>
+    <td style="width:33%;padding-right:3mm;">
+      <div style="border:1px solid #D7E5DF;border-top:5px solid #D9932B;border-radius:10px;padding:8pt;text-align:center;">
+        <div style="font-family:Poppins;font-weight:700;font-size:15pt;color:#9A6410;">18&ndash;23</div>
+        <div style="font-family:Poppins;font-size:8.4pt;color:#5C7169;">Gangguan ringan</div></div>
+    </td>
+    <td style="width:33%;">
+      <div style="border:1px solid #D7E5DF;border-top:5px solid #CF5B41;border-radius:10px;padding:8pt;text-align:center;">
+        <div style="font-family:Poppins;font-weight:700;font-size:15pt;color:#9E3B26;">0&ndash;17</div>
+        <div style="font-family:Poppins;font-size:8.4pt;color:#5C7169;">Gangguan berat</div></div>
+    </td>
+  </tr></table>
+
+  <div class="callout co-amber">
+     <div class="ttl">Perlu diperhatikan</div>
+     <p>Skor MMSE dipengaruhi <b>usia</b> dan <b>tingkat pendidikan</b>, sehingga interpretasinya
+     harus mempertimbangkan faktor tersebut.<sup>15</sup></p>
+  </div>
+  <div class="callout co-green">
+     <div class="ttl">Poin Kunci Bab IV &amp; V</div>
+     <p>Kelelahan diukur dengan <b>FSS</b> (rata-rata &ge; 4 = bermakna); fungsi kognitif ditapis
+     dengan <b>MMSE</b> (skor &le; 23 = kemungkinan gangguan). Keduanya alat skrining sederhana.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">13</span></div></div><div class="page "><div class="chapband"><div class="cnum">VI</div><div class="ctag">Bab Enam</div><div class="ctitle">Cegah dari Akar:<br>Mencukupi Iodium Sebelum &amp; Selama Hamil</div></div>
+<div class="pad" style="top:42mm;">
+  <p class="lead">Pencegahan GAKI bertumpu pada satu hal utama: <b>memenuhi kebutuhan iodium</b>
+  &mdash; idealnya sejak sebelum hamil.</p>
+
+  <table class="two"><tr>
+    <td style="width:78%;padding-right:4mm;">
+      <div class="sub" style="margin-top:0;"><span class="dot"></span>1. Gunakan garam beryodium</div>
+      <p>WHO menganjurkan semua garam konsumsi difortifikasi iodium (<i>Universal Salt
+      Iodization</i>).<sup>4</sup> Di Indonesia, garam beryodium harus memenuhi <b>SNI</b> dengan
+      kadar kalium iodat (KIO<sub>3</sub>) <b>minimal 30 ppm</b> (kisaran 30&ndash;80 ppm).<sup>16</sup></p>
+    </td>
+    <td style="width:22%;text-align:center;padding-top:2mm;"><svg width="30mm" height="30mm" viewBox="0 0 120 120"><path d="M40 44 L80 44 L86 108 L34 108 Z" fill="#2C7DA0"/><path d="M44 30 Q60 18 76 30 L80 44 L40 44 Z" fill="#245E7A"/><circle cx="54" cy="26" r="2.4" fill="#E6F0F5"/><circle cx="62" cy="24" r="2.4" fill="#E6F0F5"/><circle cx="70" cy="27" r="2.4" fill="#E6F0F5"/><circle cx="58" cy="12" r="2.2" fill="#2C7DA0"/><circle cx="70" cy="9" r="1.8" fill="#2C7DA0"/><circle cx="49" cy="9" r="1.8" fill="#2C7DA0"/><text x="60" y="86" font-family="Poppins" font-size="20" fill="#E6F0F5" text-anchor="middle" font-weight="700">I</text></svg></td>
+  </tr></table>
+
+  <div class="sub"><span class="dot"></span>2. Penuhi kebutuhan 250 &micro;g/hari</div>
+  <p>Kebutuhan iodium ibu hamil adalah <b>250 &micro;g/hari</b>. Bila asupan dari garam belum
+  cukup, <b>suplementasi iodium</b> dapat dipertimbangkan sesuai penilaian tenaga kesehatan,
+  dengan tetap <b>tidak melebihi</b> batas atas yang dianjurkan.<sup>2,3,4</sup></p>
+
+  <div class="sub"><span class="dot"></span>3. Konsumsi sumber iodium alami</div>
+  <p>Perbanyak bahan pangan sumber iodium di samping garam beryodium:</p>
+  <div style="margin:3pt 0;">
+     <span class="pill">Ikan laut</span><span class="pill">Udang &amp; kerang</span>
+     <span class="pill">Rumput laut</span><span class="pill">Susu &amp; olahannya</span>
+     <span class="pill">Telur</span>
+  </div>
+
+  <div class="callout co-blue">
+     <div class="ttl">Tips menyimpan &amp; memasak garam</div>
+     <p>Iodium mudah menguap oleh panas. <b>Tambahkan garam di akhir memasak</b>, dan simpan dalam
+     <b>wadah tertutup</b> yang terhindar dari panas agar kadar iodiumnya tetap terjaga.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">14</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Bab VI &middot; Pencegahan GAKI</div>
+
+  <div class="sub" style="margin-top:1mm;"><span class="dot"></span>4. Batasi zat goitrogenik</div>
+  <p>Beberapa bahan pangan bersifat <b>goitrogenik</b> (mengganggu pemanfaatan iodium), misalnya
+  <b>singkong mentah atau kurang matang</b>. Konsumsinya sebaiknya tidak berlebihan dan diimbangi
+  asupan iodium yang cukup serta dimasak hingga matang.</p>
+
+  <div class="sub"><span class="dot"></span>5. Pantau status iodium</div>
+  <p>Pemantauan berkala melalui median UIC ibu hamil (target <b>150&ndash;249 &micro;g/L</b>)
+  berguna untuk menilai kecukupan program dan kebutuhan intervensi.<sup>2,4</sup></p>
+
+  <div class="card" style="border-top:5px solid #12876B;">
+     <div style="font-family:Poppins;font-weight:700;color:#0E6B54;font-size:11pt;margin-bottom:5pt;">
+        Ringkasan Langkah Pencegahan GAKI</div>
+     <table class="two"><tr>
+       <td style="width:50%;vertical-align:top;">
+         <ul class="clean" style="margin:0;">
+           <li>Pakai garam beryodium ber-SNI (KIO<sub>3</sub> &ge; 30 ppm)</li>
+           <li>Cukupi 250 &micro;g iodium/hari</li>
+           <li>Perbanyak ikan &amp; hasil laut, susu, telur</li>
+         </ul>
+       </td>
+       <td style="width:50%;vertical-align:top;">
+         <ul class="clean" style="margin:0;">
+           <li>Tambah garam di akhir masak, simpan tertutup</li>
+           <li>Batasi goitrogen (singkong mentah)</li>
+           <li>Pantau status iodium (UIC) saat hamil</li>
+         </ul>
+       </td>
+     </tr></table>
+  </div>
+
+  <div class="callout co-amber">
+     <div class="ttl">Mulai sejak sebelum hamil</div>
+     <p>Kecukupan iodium yang dibangun <b>sejak masa prakonsepsi</b> memberi perlindungan terbaik
+     &mdash; bukan hanya bagi ibu, tetapi juga bagi perkembangan otak janin sejak awal kehamilan.<sup>7,8</sup></p>
+  </div>
+
+  <div class="callout co-green">
+     <div class="ttl">Poin Kunci Bab VI</div>
+     <p>Kunci mencegah GAKI: <b>garam beryodium + asupan 250 &micro;g/hari + sumber iodium alami</b>,
+     penyimpanan garam yang benar, batasi goitrogen, dan pantau status iodium.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">15</span></div></div><div class="page "><div class="chapband"><div class="cnum">VII</div><div class="ctag">Bab Tujuh</div><div class="ctitle">Menjaga Energi:<br>Mencegah Kelelahan pada Ibu Hamil</div></div>
+<div class="pad" style="top:42mm;">
+  <p class="lead">Kelelahan pada ibu hamil dengan GAKI biasanya <b>berlapis penyebab</b>. Karena itu,
+  pencegahannya menggabungkan koreksi penyebab dan penerapan pola hidup sehat.</p>
+
+  <div class="sub"><span class="dot"></span>1. Atasi akar penyebab: hipotiroid &amp; anemia</div>
+  <p>Skrining dan koreksi status iodium/tiroid serta <b>pencegahan anemia</b> adalah langkah kunci.
+  Kebutuhan zat besi meningkat saat hamil (sekitar <b>27 mg/hari</b>); makanan kaya zat besi dan
+  suplemen sesuai anjuran membantu mencegah anemia yang memperberat kelelahan.<sup>17</sup></p>
+
+  <div class="sub"><span class="dot"></span>2. Gizi seimbang &amp; cukup cairan</div>
+  <p>Asupan energi, protein, vitamin, dan mineral yang cukup menjaga produksi energi tubuh.
+  Padukan sumber zat besi dengan <b>vitamin C</b> (mis. buah segar) agar penyerapannya lebih
+  baik.<sup>17</sup></p>
+
+  <div class="card" style="border-top:5px solid #D9932B;">
+     <div style="font-family:Poppins;font-weight:700;color:#9A6410;font-size:10.5pt;margin-bottom:4pt;">
+        Contoh sumber zat besi + vitamin C</div>
+     <div>
+        <span class="pill" style="background:#FBF1DD;color:#9A6410;">Daging &amp; hati</span>
+        <span class="pill" style="background:#FBF1DD;color:#9A6410;">Ikan</span>
+        <span class="pill" style="background:#FBF1DD;color:#9A6410;">Bayam &amp; sayuran hijau</span>
+        <span class="pill" style="background:#FBF1DD;color:#9A6410;">Kacang-kacangan</span>
+        <span class="pill" style="background:#FBE7E1;color:#9E3B26;">Jeruk</span>
+        <span class="pill" style="background:#FBE7E1;color:#9E3B26;">Jambu biji</span>
+        <span class="pill" style="background:#FBE7E1;color:#9E3B26;">Tomat</span>
+     </div>
+  </div>
+
+  <div class="callout co-blue">
+     <div class="ttl">3. Istirahat &amp; tidur yang baik</div>
+     <p>Tidur cukup, jadwal tidur teratur, serta istirahat pendek di siang hari membantu memulihkan
+     energi.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">16</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Bab VII &middot; Mencegah Kelelahan</div>
+
+  <div class="sub" style="margin-top:1mm;"><span class="dot"></span>4. Aktivitas fisik terukur &amp; bertahap</div>
+  <p>Aktivitas fisik ringan&ndash;sedang yang teratur (sesuai kondisi kehamilan dan anjuran tenaga
+  kesehatan) justru dapat <b>mengurangi</b> rasa lelah. Lakukan bertahap dan tidak berlebihan.</p>
+
+  <div class="sub"><span class="dot"></span>5. Kelola beban kerja &amp; stres</div>
+  <p>Atur ritme kegiatan, bagi tugas, dan manfaatkan <b>dukungan keluarga</b> untuk mencegah
+  kelelahan berlebih.</p>
+
+  <div class="callout co-coral">
+     <div class="ttl">Kenali tanda bahaya &mdash; segera periksa!</div>
+     <p>Bila kelelahan disertai gejala berikut, segera periksa untuk menyingkirkan anemia berat,
+     gangguan tiroid, atau komplikasi lain:<sup>17</sup></p>
+     <table class="two" style="margin-top:3pt;"><tr>
+       <td style="width:50%;vertical-align:top;">
+         <ul class="clean" style="margin:0;">
+           <li>Pusing berat atau berkunang-kunang</li>
+           <li>Jantung berdebar</li>
+         </ul>
+       </td>
+       <td style="width:50%;vertical-align:top;">
+         <ul class="clean" style="margin:0;">
+           <li>Sesak napas</li>
+           <li>Tampak sangat pucat</li>
+         </ul>
+       </td>
+     </tr></table>
+  </div>
+
+  <div class="card" style="border-top:5px solid #12876B;">
+     <div style="font-family:Poppins;font-weight:700;color:#0E6B54;font-size:11pt;margin-bottom:5pt;">
+        6 Kunci Menjaga Energi Ibu Hamil</div>
+     <table class="two"><tr>
+       <td style="width:50%;vertical-align:top;">
+         <ul class="num" style="margin:0;">
+           <li>Koreksi hipotiroid &amp; cegah anemia</li>
+           <li>Makan gizi seimbang &amp; cukup minum</li>
+           <li>Tidur cukup &amp; teratur</li>
+         </ul>
+       </td>
+       <td style="width:50%;vertical-align:top;">
+         <ul class="num" style="margin:0;" start="4">
+           <li>Aktivitas fisik ringan &amp; bertahap</li>
+           <li>Kelola beban kerja &amp; stres</li>
+           <li>Waspadai tanda bahaya</li>
+         </ul>
+       </td>
+     </tr></table>
+  </div>
+
+  <div class="callout co-green">
+     <div class="ttl">Poin Kunci Bab VII</div>
+     <p>Cegah kelelahan dengan mengatasi akarnya (tiroid + anemia) dan pola hidup sehat: gizi,
+     tidur, aktivitas terukur, serta kelola stres.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">17</span></div></div><div class="page "><div class="chapband"><div class="cnum">VIII</div><div class="ctag">Bab Delapan</div><div class="ctitle">Menjaga Pikiran Tajam:<br>Mencegah Gangguan Kognitif</div></div>
+<div class="pad" style="top:42mm;">
+  <p class="lead">Pencegahan gangguan kognitif berfokus pada <b>menjaga fungsi hormon tiroid</b>
+  dan kesehatan otak ibu &mdash; sekaligus melindungi perkembangan otak janin.</p>
+
+  <table class="two"><tr>
+    <td style="width:78%;padding-right:4mm;">
+      <div class="sub" style="margin-top:0;"><span class="dot"></span>1. Cukupi iodium sejak prakonsepsi</div>
+      <p>Status iodium yang cukup <b>sebelum dan selama hamil</b> penting bukan hanya bagi ibu,
+      tetapi juga bagi kecerdasan anak kelak.</p>
+    </td>
+    <td style="width:22%;text-align:center;padding-top:2mm;"><svg width="24mm" height="32mm" viewBox="0 0 90 120"><circle cx="45" cy="20" r="12" fill="#D9932B"/><path d="M40 34 C30 36 26 48 27 64 C21 70 24 92 30 92 C33 78 35 74 38 72 C40 88 40 104 42 116 L56 116 C56 104 58 86 58 72 C66 70 70 52 60 46 C58 38 50 34 40 34 Z" fill="#12876B"/><circle cx="49" cy="66" r="12" fill="#0E6B54"/><circle cx="49" cy="66" r="5" fill="#E7F2EE"/></svg></td>
+  </tr></table>
+
+  <div class="callout co-blue">
+     <div class="ttl">Apa kata penelitian?</div>
+     <p>Studi kohort besar (ALSPAC) menunjukkan status iodium ibu yang rendah pada awal kehamilan
+     berkaitan dengan <b>skor IQ verbal dan kemampuan membaca anak yang lebih rendah</b> di
+     kemudian hari.<sup>7</sup> Meta-analisis memperkuat kaitan ini, terutama pada paruh pertama
+     kehamilan.<sup>8,9</sup></p>
+  </div>
+
+  <div class="sub"><span class="dot"></span>2. Tapis &amp; tangani gangguan tiroid</div>
+  <p>Karena hipotiroidisme adalah penyebab langsung gangguan kognitif yang <b>reversibel</b>,
+  deteksi dan penanganan gangguan tiroid sesuai indikasi dapat mencegah atau memperbaiki
+  keluhan.<sup>6</sup></p>
+
+  <div class="sub"><span class="dot"></span>3. Cegah &amp; obati anemia</div>
+  <p>Anemia menurunkan konsentrasi dan membuat mudah lelah; mencegahnya juga mendukung fungsi
+  kognitif.<sup>17</sup></p>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">18</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Bab VIII &middot; Mencegah Gangguan Kognitif</div>
+
+  <div class="sub" style="margin-top:1mm;"><span class="dot"></span>4. Jaga tidur, aktivitas, &amp; stimulasi otak</div>
+  <p>Tidur yang cukup, aktivitas fisik teratur, serta <b>strategi bantu ingat</b> (mencatat,
+  membuat pengingat) membantu ibu mengelola keluhan &ldquo;pelupa&rdquo; selama kehamilan.</p>
+
+  <div class="sub"><span class="dot"></span>5. Kendalikan faktor risiko lain</div>
+  <p>Mengendalikan tekanan darah dan mencegah gangguan hipertensi dalam kehamilan penting, karena
+  berkaitan dengan luaran kognitif jangka panjang.</p>
+
+  <div class="callout co-amber">
+     <div class="ttl">6. Edukasi &amp; penenangan (reassurance)</div>
+     <p>Penting dipahami: sebagian perubahan kognitif saat hamil bersifat <b>fisiologis</b> dan
+     umumnya membaik setelah persalinan. Pemahaman ini membantu mengurangi kekhawatiran
+     berlebihan.<sup>10</sup></p>
+  </div>
+
+  <div class="card" style="border-top:5px solid #12876B;">
+     <div style="font-family:Poppins;font-weight:700;color:#0E6B54;font-size:11pt;margin-bottom:5pt;">
+        Menjaga Pikiran Tetap Tajam &mdash; Ringkasan</div>
+     <table class="two"><tr>
+       <td style="width:50%;vertical-align:top;">
+         <ul class="clean" style="margin:0;">
+           <li>Cukupi iodium sejak sebelum hamil</li>
+           <li>Tapis &amp; tangani gangguan tiroid</li>
+           <li>Cegah dan obati anemia</li>
+         </ul>
+       </td>
+       <td style="width:50%;vertical-align:top;">
+         <ul class="clean" style="margin:0;">
+           <li>Tidur cukup, aktif, latih otak</li>
+           <li>Kendalikan tekanan darah</li>
+           <li>Edukasi &amp; penenangan</li>
+         </ul>
+       </td>
+     </tr></table>
+  </div>
+
+  <div class="callout co-green">
+     <div class="ttl">Poin Kunci Bab VIII</div>
+     <p>Lindungi fungsi kognitif dengan <b>kecukupan iodium sejak dini</b>, penanganan tiroid &amp;
+     anemia, gaya hidup sehat, serta pemahaman bahwa sebagian perubahan bersifat sementara.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">19</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Penutup</div>
+  <div style="font-family:Poppins;font-weight:700;font-size:21pt;color:#0E6B54;margin:2mm 0 4mm 0;">
+     Kesimpulan &amp; Pesan Kunci</div>
+
+  <p class="lead">GAKI masih menjadi masalah gizi masyarakat di Indonesia, dengan ibu hamil sebagai
+  kelompok rentan. Kekurangan iodium tidak hanya membahayakan janin, tetapi juga menimbulkan
+  gangguan fungsi pada ibu &mdash; terutama <b>kelelahan</b> dan <b>gangguan kognitif</b>.</p>
+
+  <p>Keduanya berpangkal pada <b>hipotiroidisme</b> akibat defisiensi iodium yang diperberat
+  perubahan fisiologis kehamilan. Kelelahan diukur dengan <b>FSS</b>, gangguan kognitif ditapis
+  dengan <b>MMSE</b>. Karena sebagian besar keluhan bersifat <b>reversibel</b>, pencegahan dan
+  koreksi dini sangat menentukan kualitas kesehatan ibu maupun perkembangan janin.</p>
+
+  <div class="card" style="border:none;background:#0E6B54;background:-webkit-linear-gradient(135deg,#0E6B54,#1FA07E);color:#fff;">
+     <div style="font-family:Poppins;font-weight:700;font-size:12pt;margin-bottom:6pt;color:#fff;">
+        5 Pesan untuk Ibu &amp; Keluarga</div>
+     <table style="width:100%;"><tr><td style="vertical-align:top;color:#fff;">
+       <ul class="num" style="margin:0;">
+         <li style="color:#fff;">Gunakan <b style="color:#fff;">garam beryodium</b> setiap hari, tambahkan di akhir memasak.</li>
+         <li style="color:#fff;">Cukupi <b style="color:#fff;">iodium 250 &micro;g/hari</b>; perbanyak ikan, hasil laut, susu, dan telur.</li>
+         <li style="color:#fff;">Cegah <b style="color:#fff;">anemia</b> dengan zat besi + vitamin C.</li>
+         <li style="color:#fff;">Jaga <b style="color:#fff;">tidur, aktivitas ringan, dan gizi seimbang</b>.</li>
+         <li style="color:#fff;">Bila lelah atau pelupa terasa berat, <b style="color:#fff;">periksakan diri</b> &mdash; jangan dianggap wajar.</li>
+       </ul>
+     </td></tr></table>
+  </div>
+
+  <div style="text-align:center;margin-top:8mm;">
+     <div style="font-family:Lora;font-style:italic;font-size:15pt;color:#0E6B54;">
+        &ldquo;Iodium cukup, ibu bertenaga, pikiran jernih, buah hati cerdas.&rdquo;</div>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">20</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Referensi</div>
+  <div style="font-family:Poppins;font-weight:700;font-size:21pt;color:#0E6B54;margin:2mm 0 3mm 0;">
+     Daftar Pustaka</div>
+  <p style="font-size:9pt;color:#5C7169;margin-bottom:4pt;">Ditulis mengikuti format Vancouver.
+  Angka di depan sesuai penanda <sup>n</sup> pada teks.</p>
+  <table style="width:100%;border-collapse:collapse;"><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">1.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Kementerian Kesehatan Republik Indonesia. GAKY (Gangguan Akibat Kekurangan Yodium): Sebuah Endemi yang Terabaikan [Internet]. Jakarta: Yankes Kemenkes RI; 2022 [dikutip 2 Juli 2026]. Tersedia pada: https://yankes.kemkes.go.id/view_artikel/1935</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">2.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">World Health Organization, UNICEF, ICCIDD. Assessment of Iodine Deficiency Disorders and Monitoring Their Elimination: A Guide for Programme Managers. 3rd ed. Geneva: WHO; 2007.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">3.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Cassio A. Iodine deficiency in pregnancy. Italian Journal of Pediatrics. 2014;40(Suppl 1):A16. doi:10.1186/1824-7288-40-S1-A16.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">4.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">World Health Organization. Guideline: Fortification of Food-Grade Salt with Iodine for the Prevention and Control of Iodine Deficiency Disorders. Geneva: WHO; 2014.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">5.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Bernal J. Thyroid Hormones in Brain Development and Function. Dalam: Endotext [Internet]. South Dartmouth (MA): MDText.com, Inc.; 2022.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">6.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Jurado-Flores M, Warda F, Mooradian A. Pathophysiology and Clinical Features of Neuropsychiatric Manifestations of Thyroid Disease. Journal of the Endocrine Society. 2022;6(2):bvab194. doi:10.1210/jendso/bvab194.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">7.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Bath SC, Steer CD, Golding J, Emmett P, Rayman MP. Effect of inadequate iodine status in UK pregnant women on cognitive outcomes in their children (ALSPAC). Lancet. 2013;382(9889):331-337. doi:10.1016/S0140-6736(13)60436-5.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">8.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Levie D, Korevaar TIM, Bath SC, Murcia M, Dineva M, Llop S, dkk. Association of Maternal Iodine Status With Child IQ: A Meta-Analysis of Individual Participant Data. Journal of Clinical Endocrinology &amp; Metabolism. 2019;104(12):5957-5967. doi:10.1210/jc.2018-02559.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">9.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Zimmermann MB. Are mild maternal iodine deficiency and child IQ linked? Nature Reviews Endocrinology. 2013;9(9):505-506. doi:10.1038/nrendo.2013.128.</td></tr></table>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">21</span></div></div><div class="page ">
+<div class="pad">
+  <div class="eyebrow">Referensi (lanjutan)</div>
+  <div style="font-family:Poppins;font-weight:700;font-size:16pt;color:#0E6B54;margin:2mm 0 3mm 0;">
+     Daftar Pustaka</div>
+  <table style="width:100%;border-collapse:collapse;"><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">10.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Hoekzema E, Barba-Muller E, Pozzobon C, Picado M, Lucco F, Garcia-Garcia D, dkk. Pregnancy leads to long-lasting changes in human brain structure. Nature Neuroscience. 2017;20(2):287-296. doi:10.1038/nn.4458.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">11.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Krupp LB, LaRocca NG, Muir-Nash J, Steinberg AD. The Fatigue Severity Scale: application to patients with multiple sclerosis and systemic lupus erythematosus. Archives of Neurology. 1989;46(10):1121-1123. doi:10.1001/archneur.1989.00520460115022.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">12.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Valko PO, Bassetti CL, Bloch KE, Held U, Baumann CR. Validation of the Fatigue Severity Scale in a Swiss cohort. Sleep. 2008;31(11):1601-1607. doi:10.1093/sleep/31.11.1601.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">13.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Rifa\u2019i A, Satiti I, Sagala I, Setiabudhi V. Validity and Reliability of the Fatigue Severity Scale in Patients with Chronic Kidney Disease on Dialysis in Indonesia. Clinical and Research Journal in Internal Medicine. 2024;5(2):140-143. doi:10.21776/ub.crjim.2024.005.02.07.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">14.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Folstein MF, Folstein SE, McHugh PR. &ldquo;Mini-mental state&rdquo;: a practical method for grading the cognitive state of patients for the clinician. Journal of Psychiatric Research. 1975;12(3):189-198. doi:10.1016/0022-3956(75)90026-6.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">15.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Tombaugh TN, McIntyre NJ. The Mini-Mental State Examination: a comprehensive review. Journal of the American Geriatrics Society. 1992;40(9):922-935. doi:10.1111/j.1532-5415.1992.tb01992.x.</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">16.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Badan Standardisasi Nasional. SNI Garam Konsumsi Beryodium (SNI 3556:2010): kadar kalium iodat (KIO3) minimal 30 ppm [Internet]. Jakarta: BSN [dikutip 2 Juli 2026].</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">17.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Mayo Clinic. Iron deficiency anemia during pregnancy: prevention tips [Internet]. Rochester (MN): Mayo Foundation for Medical Education and Research; 2025 [dikutip 2 Juli 2026].</td></tr><tr><td style="width:9mm;font-family:Poppins;font-weight:700;color:#0E6B54;vertical-align:top;padding:4pt 0;font-size:9pt;">18.</td><td style="vertical-align:top;padding:4pt 0 4pt 3pt;font-size:9pt;line-height:1.4;">Kementerian Kesehatan Republik Indonesia, Badan Penelitian dan Pengembangan Kesehatan. Riset Kesehatan Dasar (Riskesdas) 2013. Jakarta: Badan Litbangkes Kemenkes RI; 2013.</td></tr></table>
+
+  <div class="callout co-blue" style="margin-top:8mm;">
+     <div class="ttl">Catatan</div>
+     <p>Booklet ini disusun sebagai panduan edukasi berbasis bukti dan <b>tidak menggantikan
+     konsultasi medis</b>. Untuk pemeriksaan dan penanganan, hubungi tenaga kesehatan atau fasilitas
+     kesehatan terdekat.</p>
+  </div>
+</div>
+<div class="footer"><span class="l">Gangguan Fungsi pada Ibu Hamil Akibat GAKI</span><span class="r">22</span></div></div><div class="page cover">
+<div style="position:absolute;top:0;left:0;right:0;bottom:0;
+     background:#0E6B54;background:-webkit-linear-gradient(160deg,#0E6B54 0%,#12876B 60%,#1FA07E 100%);"></div>
+<svg style="position:absolute;top:0;left:0;" width="210mm" height="297mm" viewBox="0 0 210 297">
+  <circle cx="30" cy="40" r="55" fill="rgba(255,255,255,0.05)"/>
+  <circle cx="185" cy="250" r="70" fill="rgba(255,255,255,0.05)"/>
+</svg>
+<div style="position:absolute;top:70mm;left:16mm;right:16mm;text-align:center;color:#fff;">
+  <div style="display:inline-block;"><svg width="15mm" height="15mm" viewBox="0 0 100 100"><circle cx="50" cy="50" r="47" fill="none" stroke="#ffffff" stroke-width="2.5"/><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1"/><path d="M50 30 C42 38 42 50 50 58 C58 50 58 38 50 30 Z" fill="#ffffff"/><path d="M50 40 C46 46 46 56 50 68 C54 56 54 46 50 40 Z" fill="#12876B"/><path d="M35 60 Q50 74 65 60" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+  <div style="font-family:Lora;font-style:italic;font-size:17pt;margin-top:8mm;color:#EAF7F1;">
+     &ldquo;Sehat Ibu, Cerdas Buah Hati&rdquo;</div>
+  <div style="width:34mm;height:2px;background:#BFE6D8;margin:8mm auto;"></div>
+  <div style="font-family:Poppins;font-weight:600;font-size:9.5pt;letter-spacing:1px;">
+     Gangguan Fungsi pada Ibu Hamil Akibat GAKI</div>
+  <div style="font-family:Poppins;font-size:8.4pt;color:#BFE6D8;margin-top:2mm;">
+     Kelelahan &amp; Gangguan Kognitif &mdash; Panduan Ringkas Berbasis Bukti</div>
+</div>
+<div style="position:absolute;bottom:24mm;left:16mm;right:16mm;text-align:center;color:#EAF7F1;">
+  <div style="font-family:Poppins;font-weight:700;letter-spacing:2px;font-size:8.6pt;">
+     FAKULTAS KEDOKTERAN UNIVERSITAS DIPONEGORO</div>
+  <div style="font-family:Poppins;font-weight:500;letter-spacing:2px;font-size:8pt;color:#BFE6D8;">
+     DEPARTEMEN ILMU KESEHATAN MASYARAKAT</div>
+</div>
+<div style="position:absolute;bottom:12mm;left:0;right:0;text-align:center;
+     font-family:Poppins;font-size:7.6pt;color:#BFE6D8;">
+   Copyright &copy; 2026 &middot; Universitas Diponegoro. Hak cipta dilindungi.</div>
+</div></body></html>
